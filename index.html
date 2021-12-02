@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>booking app</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,700;1,500&display=swap');
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="booking">
+            <div class="userInfo">
+                <div class="row">
+                    <div class="label">
+                        <label for="name">Name</label>
+                    </div>
+                    <dic class="inputContainer">
+                        <input type="text" id="name" class="inputTag">
+                    </dic>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="phoneNo">Phone No:</label>
+                    </div>
+                    <div class="inputContainer">
+                        <input type="number" id="phoneNo" class="inputTag">
+                    </div>
+                </div>
+            </div>
+            <div class="dateAndTime">
+                <input type="date" class="date">
+                <input type="time" class="time">
+                <button class="book Btn">
+                    Done
+                </button>
+            </div>
+        </div>
+        <div class="bookingCharts">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

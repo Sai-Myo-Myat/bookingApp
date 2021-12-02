@@ -1,0 +1,135 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mainContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color:  #57a773;
+}
+
+.booking {
+    width: 100%;
+    height: 30%;
+    background-color: #efe9f4;
+    display: flex;
+}
+
+.userInfo {
+    width: 50%;
+    height: 100%;
+    border-right: 1px solid #f3cdc8;
+}
+
+.row {
+    margin: 10px;
+}
+
+.label {
+    color: #ee6352;
+    user-select: none;
+}
+
+.inputTag{
+    width: 70%;
+    padding: 10px 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: #08b2e3;
+    color: white;
+}
+
+.dateAndTime {
+    position: relative;
+    width: 50%;
+    height: 100%;
+}
+
+.Btn {
+    padding: 5px 10px;
+    background-color: aqua;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+}
+
+.Btn:active {
+    padding: 9px;
+}
+
+.dateAndTime {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.date, .time {
+    width: 230px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #08b2e3;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+.bookingCharts {
+    width: 100%;
+    height: 70%;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 300px;
+    height: 35%;
+    background-color: #ee6352;
+    margin-bottom: 10px;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0,0.5);
+}
+
+.cancelBtn {
+    color: rgb(144, 7, 7);
+    font-weight: 1000;
+    font-size: 15px;
+}
+
+.info {
+    display: flex;
+}
+
+.facts {
+    color: rgb(144, 7, 7);
+    padding: 0px 5px;
+}
+
+.colors {
+    background-color: #ee6352;
+    background-color: #484d6d;
+}
