@@ -86,3 +86,5 @@ bookBtn.addEventListener('click',() => {
       bookingCharts.append(container);
     }
 });
+
+//https://jsfiddle.net/q1edmg39/
