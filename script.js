@@ -4,7 +4,7 @@ const bookBtn = document.querySelector('.book');
 const bookingCharts = document.querySelector('.bookingCharts');
 
 let year,month,day,hour,minute,meridian;
-const allInformation = [];       //to get the right booked informations/
+const allInformation = [];      //to get the right booked informations/
 
 bookBtn.addEventListener('click',() => {
     bookingCharts.innerHTML = "";
@@ -34,27 +34,32 @@ bookBtn.addEventListener('click',() => {
     if(userName === "" || phoneNo === "" || month === undefined || minute === undefined ){
         alert("Fill all information please!")
         return
-    }              //checking to get all needed user information/
+    }   //checking to get all needed user information/
 
     const facts = [userName,phoneNo,year,month,day,hour,minute,meridian];
     allInformation.push(facts);
 
     for (let i = 0; i < allInformation.length; i++) {
+      const currentArray = allInformation[i]; 
+      const isDeletedOrNot = currentArray[currentArray.length-1];
+      if(isDeletedOrNot === "deleted"){
+          continue;
+      } // -->  not to create a bookchart of a deleted one;
       const container = document.createElement('div');
       container.classList.add("container")
       const bookingChart = `    
       <div class="bookingChart">
           <div class="bookedName info">
-              Name: <div class="facts"> ${allInformation[i][0]} </div>
+              Name: <div class="facts"> ${currentArray[0]} </div>
           </div>
           <div class="bookedPhoneNo info">
-              phone number: <div class="facts"> ${allInformation[i][1]} </div>
+              phone number: <div class="facts"> ${currentArray[1]} </div>
           </div>
           <div class="bookedDate info">
-              Date: <div class="facts" >${allInformation[i][4]} . ${allInformation[i][3]} . ${allInformation[i][2]}</div>
+              Date: <div class="facts" >${currentArray[4]} . ${currentArray[3]} . ${currentArray[2]}</div>
           </div>
           <div class="bookedTime info">
-              Time:  <div class="facts">${allInformation[i][5]} : ${allInformation[i][6]} ${allInformation[i][7]} </div>
+              Time:  <div class="facts">${currentArray[5]} : ${currentArray[6]} ${currentArray[7]} </div>
           </div>
       </div>`
 
@@ -69,9 +74,9 @@ bookBtn.addEventListener('click',() => {
           allInformation[i][5] += 12;
         } //to work cancel function corretly when meridian is PM
 
-        const bookingTime = new Date(allInformation[i][2],allInformation[i][3]-1,allInformation[i][4],allInformation[i][5],allInformation[i][6]);
+        const bookingTime = new Date(currentArray[2],currentArray[3]-1,currentArray[4],currentArray[5],currentArray[6]);
         if(meridian === "PM"){
-          allInformation[i][5] -=12;
+          currentArray[5] -=12;
         }// to fix adding 12 to hour angin and again
         const currentTime = new Date();
         currentTime.setMinutes(currentTime.getMinutes() + 1);
@@ -80,11 +85,11 @@ bookBtn.addEventListener('click',() => {
         }else{
           alert("you can cancel");
           container.style.display = "none";
-          allInformation.splice(i,1);
+          currentArray.push("deleted"); // flag a deleted one ;
         }
       });
       bookingCharts.append(container);
     }
 });
 
-//https://jsfiddle.net/q1edmg39/
+//https://jsfiddle.net/g0twy8kL/
