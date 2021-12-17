@@ -1,17 +1,13 @@
-//issue!!!
-//user can create the same booking time
-//need to think a lot about time,Date();
-
 const date = document.querySelector('.date');
 const time = document.querySelector('.time');
 const bookBtn = document.querySelector('.book');
 const bookingCharts = document.querySelector('.bookingCharts');
 
 let year,month,day,hour,minute,meridian;
-const allBookingTime = [];
+const allInformation = [];      //to get the right booked informations/
 
 bookBtn.addEventListener('click',() => {
-    const allInformation = [];      //to get the right booked informations/
+    bookingCharts.innerHTML = "";
     const userName = document.querySelector('#name').value;
     const phoneNo = document.querySelector('#phoneNo').value;
     const yearMonthDay = date.value.split("-");
@@ -28,15 +24,16 @@ bookBtn.addEventListener('click',() => {
       hour -= 12;
     } else if (hour < 12) {
       meridian = 'AM';
-      if (hour === 0) {
+      if (hour == 0) {
         hour = 12;
       }
     } else {
       meridian = 'PM';
-      hour = 0;
     }
 
-    const facts = [userName,phoneNo,year,month,day,hour,minute,meridian];
+    const bookingTimeObj = {};
+
+    const facts = [userName,phoneNo,year,month,day,hour,minute,meridian,bookingTimeObj];
     allInformation.push(facts);
 
     if(userName === "" || phoneNo === "" || month === undefined || minute === undefined ){
@@ -46,28 +43,34 @@ bookBtn.addEventListener('click',() => {
 
     for (let i = 0; i < allInformation.length; i++) { 
       const currentArray = allInformation[i]; 
+      console.log(currentArray)
       if(meridian === "PM"){
         currentArray[5] += 12;
       } //to work cancel function corretly when meridian is PM
 
       const bookingTime = new Date(currentArray[2],currentArray[3]-1,currentArray[4],currentArray[5],currentArray[6]);
+      if(meridian === "PM"){
+        currentArray[5] -=12;
+      }// to fix adding 12 to hour angin and again
 
-      console.log("first",allBookingTime)
-      let alreadyBooked = allBookingTime.filter(existed => {
-        return existed === bookingTime.getTime();
-      })
-      const exists = alreadyBooked.length > 0;
-      if(exists){
-        alert("This time is not available, It's already booked");
-        return;
-      } // checking a booked time is abailable or not
+      bookingTimeObj.Time = bookingTime.getTime();
 
       const currentTime1 = new Date();
-      if(bookingTime.getTime() < currentTime1.getTime()){
+      const isDeletedOrNot = currentArray[currentArray.length-1];
+      console.log(isDeletedOrNot)
+      if(isDeletedOrNot === "deleted") {
+        console.log(isDeletedOrNot)
+        console.log(currentArray);
+        continue;      // -->  not to create a bookchart of a deleted one;
+      }else if(bookingTime.getTime() < currentTime1.getTime()){
+        currentArray.push("deleted");  // --> to continue this booking!
         alert("You can't make a booking of passed time!");
         return;
       }
-      allBookingTime.push(bookingTime.getTime()); // to check a booking is already existed or not !
+
+      //issue!!!
+      // everything is gone when user information is not completed
+      //user can create the same booking time
 
       const container = document.createElement('div');
       container.classList.add("container")
@@ -90,12 +93,10 @@ bookBtn.addEventListener('click',() => {
       // make cancel button outside the template leteral to handle cancel function well/
       const cancelBtn = document.createElement('div');
       cancelBtn.textContent = "cancel";
-      cancelBtn.classList.add("cancelBtn","Btn");
-      cancelBtn.id = i;
+      cancelBtn.classList.add("cancelBtn","Btn")
       container.innerHTML = bookingChart;
       container.append(cancelBtn);
       cancelBtn.addEventListener("click",() => {
-        console.log("first i,",i)
         console.log(bookingTime.getTime());
         const currentTime = new Date();
         currentTime.setMinutes(currentTime.getMinutes() + 1);
@@ -104,9 +105,14 @@ bookBtn.addEventListener('click',() => {
         }else{
           alert("you can cancel");
           container.style.display = "none";
-          //currentArray.push("deleted"); // flag a deleted one ;
+          currentArray.push("deleted"); // flag a deleted one ;
         }
       });
+
+      if(currentArray[8].Time < currentTime1.getTime()){
+        continue;
+      }
+
       bookingCharts.append(container);
     }
 });
