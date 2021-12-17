@@ -46,15 +46,14 @@ bookBtn.addEventListener('click',() => {
 
     for (let i = 0; i < allInformation.length; i++) { 
       const currentArray = allInformation[i]; 
+      const bookingTimeArray = [];
       if(meridian === "PM"){
         currentArray[5] += 12;
       } //to work cancel function corretly when meridian is PM
 
       const bookingTime = new Date(currentArray[2],currentArray[3]-1,currentArray[4],currentArray[5],currentArray[6]);
-
-      console.log("first",allBookingTime)
       let alreadyBooked = allBookingTime.filter(existed => {
-        return existed === bookingTime.getTime();
+        return existed[0] === bookingTime.getTime();
       })
       const exists = alreadyBooked.length > 0;
       if(exists){
@@ -67,7 +66,7 @@ bookBtn.addEventListener('click',() => {
         alert("You can't make a booking of passed time!");
         return;
       }
-      allBookingTime.push(bookingTime.getTime()); // to check a booking is already existed or not !
+      bookingTimeArray.push(bookingTime.getTime()); // to check a booking is already existed or not !
 
       const container = document.createElement('div');
       container.classList.add("container")
@@ -95,8 +94,6 @@ bookBtn.addEventListener('click',() => {
       container.innerHTML = bookingChart;
       container.append(cancelBtn);
       cancelBtn.addEventListener("click",() => {
-        console.log("first i,",i)
-        console.log(bookingTime.getTime());
         const currentTime = new Date();
         currentTime.setMinutes(currentTime.getMinutes() + 1);
         if(currentTime.getTime() > bookingTime.getTime()){
@@ -104,9 +101,10 @@ bookBtn.addEventListener('click',() => {
         }else{
           alert("you can cancel");
           container.style.display = "none";
-          //currentArray.push("deleted"); // flag a deleted one ;
+          bookingTimeArray[0] = 0; // to get free when user cancel this booking !
         }
       });
+      allBookingTime.push(bookingTimeArray);
       bookingCharts.append(container);
     }
 });
