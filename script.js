@@ -36,7 +36,7 @@ bookBtn.addEventListener('click',() => {
       hour = 0;
     }
 
-    const facts = [userName,phoneNo,year,month,day,hour,minute,meridian];
+    const facts = [userName,phoneNo,year,month,day,hour,minute,meridian]; // collecting all informations to use later
     allInformation.push(facts);
 
     if(userName === "" || phoneNo === "" || month === undefined || minute === undefined ){
@@ -44,9 +44,10 @@ bookBtn.addEventListener('click',() => {
       return
     }   //checking to get all needed user information/
 
+    //making booking-chart ( it's possible without looping)
     for (let i = 0; i < allInformation.length; i++) { 
       const currentArray = allInformation[i]; 
-      const bookingTimeArray = [];
+      const bookingTimeArray = [];//we make array because we want to repair when user cancel
       if(meridian === "PM"){
         currentArray[5] += 12;
       } //to work cancel function corretly when meridian is PM
@@ -65,7 +66,8 @@ bookBtn.addEventListener('click',() => {
       if(bookingTime.getTime() < currentTime1.getTime()){
         alert("You can't make a booking of passed time!");
         return;
-      }
+      } // if booking is passed
+
       bookingTimeArray.push(bookingTime.getTime()); // to check a booking is already existed or not !
 
       const container = document.createElement('div');
@@ -90,7 +92,6 @@ bookBtn.addEventListener('click',() => {
       const cancelBtn = document.createElement('div');
       cancelBtn.textContent = "cancel";
       cancelBtn.classList.add("cancelBtn","Btn");
-      cancelBtn.id = i;
       container.innerHTML = bookingChart;
       container.append(cancelBtn);
       cancelBtn.addEventListener("click",() => {
@@ -101,7 +102,7 @@ bookBtn.addEventListener('click',() => {
         }else{
           alert("you can cancel");
           container.style.display = "none";
-          bookingTimeArray[0] = 0; // to get free when user cancel this booking !
+          bookingTimeArray[0] = 0; // to be free this time when user cancel this booking !
         }
       });
       allBookingTime.push(bookingTimeArray);
